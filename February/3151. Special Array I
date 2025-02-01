@@ -1,0 +1,33 @@
+***************************************************************************** Python ************************************************************************************
+Approach 1: 
+
+class Solution:
+    def isArraySpecial(self, nums: List[int]) -> bool:
+        n = len(nums)
+
+        if n == 1:
+            return True
+
+        for i in range(n-1):
+            if (nums[i] & 1) == (nums[i+1] & 1):
+                return False
+        
+        return True
+
+
+Approach : 2
+
+from typing import List
+
+class Solution:
+    def isArraySpecial(self, nums: List[int]) -> bool:
+        n = len(nums)
+
+        if n == 1:
+            return True
+
+        for i in range(n - 1):
+            if nums[i] % 2 == nums[i + 1] % 2:
+                return False  # Return False immediately if a condition fails
+        
+        return True  # Only return True after all pairs are checked

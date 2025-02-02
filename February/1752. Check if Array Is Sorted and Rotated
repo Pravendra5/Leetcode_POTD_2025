@@ -1,0 +1,35 @@
+*************************************************** Python *********************************************************************
+Approach 1:
+
+class Solution:
+    def check(self, nums: List[int]) -> bool:
+        n = len(nums)
+        peak = 0
+
+        for i in range(n):
+            if nums[i] > nums[(i + 1) % n]:
+                peak += 1
+
+        return peak <= 1
+            
+Approach 2:  O(n*2)
+
+class Solution:
+    def check(self, nums: List[int]) -> bool:
+        n = len(nums)
+        
+        sorted_nums = sorted(nums)
+
+        for r in range(n):
+            isSorted =True
+            for i in range(n):
+                if sorted_nums[i] != nums[(i + r) % n]:
+                    isSorted = False
+                    break
+
+            if isSorted:
+                return True
+
+        return False
+            
+        

@@ -1,0 +1,57 @@
+***************************************************** Python ***************************************************************
+Approach 1:
+
+class Solution:
+    def areAlmostEqual(self, s1: str, s2: str) -> bool:
+        n = len(s1)
+
+        if s1 == s2:
+            return True
+
+        diff = 0
+        firstIndex = 0
+        secondIndex = 0
+
+        for i in range(n):
+            if s1[i] != s2[i]:
+                diff += 1
+
+                if diff > 2:
+                    return False
+                elif diff == 1:
+                    firstIndex = i
+                else:
+                    secondIndex = i
+
+        return s1[firstIndex] == s2[secondIndex] and s1[secondIndex] == s2[firstIndex]
+
+ # we can use temp list except of first and second index in python then unpack
+
+Approach 2:
+class Solution:
+    def areAlmostEqual(self, s1: str, s2: str) -> bool:
+        n = len(s1)
+
+        if s1 == s2:
+            return True
+
+        freq1 = [0] * 26
+        freq2 = [0] * 26
+
+        diff = 0
+
+        for i in range(n):
+            if s1[i] != s2[i]:
+                diff += 1
+
+                if diff > 2:
+                    return False
+            
+            freq1[ord(s1[i]) - ord('a')] += 1
+            freq2[ord(s2[i]) - ord('a')] += 1
+                
+
+        return freq1 == freq2
+         
+            
+        

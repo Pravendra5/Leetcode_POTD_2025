@@ -1,0 +1,66 @@
+********************************************** Python **************************************************************88
+Approach 1:
+
+class Solution:
+    def clearDigits(self, s: str) -> str:
+        i = 0
+        s = list(s)
+
+        while < len(s):
+            if s[i].isdigit():
+                del s[i]
+                if i > 0:
+                    del s[i - 1]
+                    i -= 1
+
+            else:
+                i += 1
+
+        return "".join(s)
+
+
+Approach  2 :
+
+class Solution:
+    def clearDigits(self, s: str) -> str:
+        
+        stack = []
+
+        for ch in s:
+            if 'a' <= ch <= 'z':
+                stack.append(ch)
+            elif stack:
+                stack.pop()
+
+        return "".join(stack)
+
+Approach 3:
+# here we are not using stack 
+
+class Solution:
+    def clearDigits(self, s: str) -> str:
+        result = []
+
+        for ch in s:
+            if 'a' <= ch <= 'z':
+                result.append(ch)
+            elif result:
+                result.pop()
+        
+        return "".join(result)
+
+Approach 4:
+
+def clear_digits(s: str) -> str:
+    result = []
+    
+    for ch in s:
+        if ch.isalpha():
+            result.append(ch)  # Add character to the list
+        elif result:
+            result.pop()  # Remove last added character
+    
+    return "".join(result)  # Efficiently join list into string
+
+
+

@@ -1,0 +1,28 @@
+********************************************** Python *************************************************************
+Approach 1:
+
+class Solution:
+    def removeOccurrences(self, s: str, part: str) -> str:
+        n = len(part)
+        result = []
+
+        for ch in s:
+            result.append(ch)
+
+            if len(result) >= n and "".join(result[-n:]) == part:
+                del result[-n:]
+
+        return "".join(result)
+
+Approach 2:
+
+ Same code and we can do with stack insted of list
+
+Approach 3:
+
+class Solution:
+    def removeOccurrences(self, s: str, part: str) -> str:
+        while part in s:
+            s = s.replace(part, "", 1)
+        return s
+        

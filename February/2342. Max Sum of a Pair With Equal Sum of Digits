@@ -1,0 +1,53 @@
+******************************************** Python ***************************************************
+
+class Solution:
+    def get_digit_sum(self, num):
+        sum_digits = 0
+
+        while num > 0:
+            sum_digits += num % 10
+            num //= 10
+        return sum_digits
+
+    def maximumSum(self, nums: List[int]) -> int:
+        n = len(nums)
+        result = -1
+
+        mp = [0]*82
+
+        for num in nums:
+            digit_sum = self.get_digit_sum(num)
+
+            if mp[digit_sum] > 0:
+                result = max(result, num + mp[digit_sum])
+
+            mp[digit_sum] = max(mp[digit_sum], num)
+
+        return result
+
+Approach 2
+
+class Solution:
+    def get_digit_sum(self, num):
+        sum_digits = 0
+
+        while num > 0:
+            sum_digits += num % 10
+            num //= 10
+        return sum_digits
+
+    def maximumSum(self, nums: List[int]) -> int:
+        n = len(nums)
+        result = -1
+
+        mp = {}
+
+        for num in nums:
+            digit_sum = self.get_digit_sum(num)
+
+            if digit_sum in mp:
+                result = max(result, num + mp[digit_sum])
+
+            mp[digit_sum] = max(mp.get(digit_sum, 0), num)
+
+        return result

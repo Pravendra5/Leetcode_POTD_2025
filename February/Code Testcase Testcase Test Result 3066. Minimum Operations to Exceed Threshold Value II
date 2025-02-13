@@ -1,0 +1,20 @@
+************************************** Python **************************************************
+
+class Solution:
+    def minOperations(self, nums: List[int], k: int) -> int:
+
+        heapq.heapify(nums)
+
+        count = 0
+
+        while len(nums) > 1 and nums[0] < k:
+            smallest = heapq.heappop(nums)
+            second_smallest = heapq.heappop(nums)
+
+
+            new_value = smallest * 2 + second_smallest
+            heapq.heappush(nums, new_value)
+            count += 1
+
+        return count if nums[0] >= k else -1
+        

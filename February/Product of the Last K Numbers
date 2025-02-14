@@ -1,0 +1,56 @@
+**************************** **************************** *************** Python *************************** *********************************** *****************
+# Product of the Last K Numbers
+  
+  Approach 2:
+class ProductOfNumbers:
+
+    def __init__(self):
+        self.nums = []
+        self.n = 0
+        
+
+    def add(self, num: int) -> None:
+        if num == 0:
+            self.nums.clear()
+            self.n = 0
+        else:
+            if not self.nums:
+                self.nums.append(num)
+            else:
+                self.nums.append(self.nums[-1] * num)
+            self.n += 1
+
+    def getProduct(self, k: int) -> int:
+        if k > self.n:
+            return 0
+        elif k == self.n:
+            return self.nums[-1]
+        
+        return self.nums[-1] // self.nums[-k-1]
+
+Approach 1: Brute Force 
+
+class ProductOfNumbers:
+
+    def __init__(self):
+        self.nums = []
+        
+
+    def add(self, num: int) -> None:
+        self.nums.append(num)
+        
+
+    def getProduct(self, k: int) -> int:
+        prod = 1
+        n = len(self.nums)
+        for i in range(n-k, n):
+            prod *= self.nums[i]
+        return prod
+
+        
+
+
+# Your ProductOfNumbers object will be instantiated and called as such:
+# obj = ProductOfNumbers()
+# obj.add(num)
+# param_2 = obj.getProduct(k)

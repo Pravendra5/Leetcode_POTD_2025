@@ -1,0 +1,84 @@
+*********************************************************************** Python ***************************************************************************
+Approach 1 : Recurssion
+class Solution:
+    def check(self, i, currsum, s, num):
+        if i == len(s):
+            return currsum == num
+
+        if currsum > num:
+            return False
+
+        for j in range(i, len(s)):
+            current_string = s[i: j+1]
+            addend = int(current_string)
+
+            if self.check(j+1, currsum + addend, s, num):
+                return True
+
+        return False
+
+
+    def punishmentNumber(self, n: int) -> int:
+        punishment_num = 0
+
+        for num in range(1, n + 1):
+            square_num = num * num
+            s = str(square_num)
+
+            if self.check(0, 0, s, num):
+                punishment_num += square_num
+
+        return punishment_num
+
+Approach 2 : Recurssion + Memo
+
+class Solution:
+    def check(self, i, currsum, s, num, memo):
+        if i == len(s):
+            return currsum == num
+
+        if currsum > num:
+            return False
+
+        if memo[i][currsum] != -1:
+            return memo[i][currsum] == 1
+
+        possible = False
+        for j in range(i, len(s)):
+            current_string = s[i: j+1]
+            addend = int(current_string)
+
+            possible = possible or self.check(j + 1, currsum + addend, s, num, memo)
+            if possible:
+                memo[i][currsum] = 1
+                return True
+        
+        memo[i][currsum] = 0
+        return False
+
+Approach 3:
+
+class Solution:
+    def check(self, num, currnum, target):
+
+        if num == 0:
+            return currnum == target
+
+        return (self.check(num // 10, currnum + num % 10, target) or
+                self.check(num // 100, currnum + num % 100, target) or
+                self.check(num // 1000, currnum + num % 1000, target) or
+                self.check(num // 10000, currnum + num % 10000, target))
+
+
+    def punishmentNumber(self, n: int) -> int:
+        punishment_num = 0
+
+        for num in range(1, n + 1):
+            sq = num * num
+
+
+            if self.check(sq, 0, num):
+                punishment_num += sq
+
+        return punishment_num
+        

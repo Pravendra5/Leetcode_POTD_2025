@@ -1,0 +1,42 @@
+************************************************************************** Python ***************************************************************
+
+class Solution:
+    def solve(self, i, n, result, used):
+        if i >= len(result):
+            return True
+
+        if result[i] != -1:
+            return self.solve(i + 1, n, result, used)
+
+        for num in range(n, 0, -1):
+            if used[num]:
+                continue
+
+            used[num] = True
+            result[i] = num
+
+            if num == 1:
+                if self.solve(i + 1, n, result, used):
+                    return True
+
+            else:
+                j = num + i
+                if j < len(result) and result[j] == -1:
+                    result[j] = num
+                    if self.solve(i + 1, n, result, used):
+                        return True
+                    result[j] = -1
+                
+            used[num] = False
+            result[i] = -1
+
+        return False
+
+    def constructDistancedSequence(self, n: int) -> List[int]:
+        result = [-1] * (2 * n - 1)
+        used = [False] * (n + 1)
+
+        self.solve(0, n, result, used)
+
+        return result
+        

@@ -1,0 +1,58 @@
+********************************************************************** Python *************************************************************************
+Approach 1:
+
+class Solution:
+    def numTilePossibilities(self, tiles: str) -> int:
+        n = len(tiles)
+        used = [False] * n
+        result = set()
+        curr = []
+
+        def solve():
+            result.add("".join(curr))
+
+            for i in range(n):
+                if used[i]:
+                    continue
+
+            
+                curr.append(tiles[i])
+                used[i] = True
+
+                solve()
+
+                used[i] = False
+                curr.pop()
+
+        solve()
+        return len(result) - 1
+
+
+Approach 2:
+
+class Solution:
+    def __init__(self):
+        self.total = 0
+
+    def findSequences(self, count):
+        self.total += 1
+        
+        for pos in range(26):
+            if count[pos] == 0:
+                continue
+            
+            count[pos] -= 1
+            self.findSequences(count)
+            count[pos] += 1
+
+
+    def numTilePossibilities(self, tiles: str) -> int:
+        
+        count = [0] * 26
+
+        for ch in tiles:
+            count[ord(ch) - ord('A')]  += 1
+
+        
+        self.findSequences(count)
+        return self.total - 1

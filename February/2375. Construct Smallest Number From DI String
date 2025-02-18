@@ -1,0 +1,88 @@
+********************************************************************** Python *************************************************************************************
+Apprach 1:
+
+class Solution:
+    def smallestNumber(self, pattern: str) -> str:
+        n = len(pattern)
+        result = []
+        stack = []
+        counter = 1
+
+        for i in range(n + 1):
+            stack.append(str(counter))
+            counter += 1
+
+            if i == n or pattern[i] == 'I':
+                while stack:
+                    result.append(stack.pop())
+
+        return ''.join(result)
+
+
+approach 2:
+
+class Solution:
+    def matchesPattern(self, num, pattern):
+        for i in range(len(pattern)):
+            if (pattern[i] == 'I' and num[i] > num[i + 1]) or (pattern[i] == 'D' and num[i] < num[i + 1]):
+                return False
+        return True
+        
+    def smallestNumber(self, pattern: str) -> str:
+
+        n = len(pattern)
+        nums = [str(i) for i in range(1, n + 2)]  # ['1', '2', ..., 'n+1']
+
+        # Generate permutations and find the smallest one matching the pattern
+        for perm in permutations(nums):
+            perm_str = ''.join(perm)
+            if self.matchesPattern(perm_str, pattern):
+                return perm_str
+
+        return ""
+
+
+Approach 3:
+
+class Solution:
+    def smallestNumber(self, pattern: str) -> str:
+        def backtrack(index, path, used):
+            # Base case: If the path length is n+1, we have a valid number
+            if index == len(pattern) + 1:
+                return "".join(path)
+
+            # Try each digit from 1 to 9
+            for num in range(1, 10):
+                num_str = str(num)
+
+                # Skip if already used
+                if num_str in used:
+                    continue
+
+                # Check the pattern constraint
+                if index > 0:
+                    if (pattern[index - 1] == 'I' and path[-1] > num_str) or \
+                       (pattern[index - 1] == 'D' and path[-1] < num_str):
+                        continue
+                
+                # Choose
+                path.append(num_str)
+                used.add(num_str)
+                
+                # Recur
+                result = backtrack(index + 1, path, used)
+                if result:  # If a solution is found, return it
+                    return result
+                
+                # Backtrack
+                path.pop()
+                used.remove(num_str)
+            
+            return None
+
+        # Initialize the parameters and start backtracking
+        return backtrack(0, [], set())
+
+# Example Test
+solution = Solution()
+print(solution.smallestNumber("ID"))  # Expected Output: "132"

@@ -1,0 +1,56 @@
+Approach 1:
+
+class Solution:
+    def getHappyString(self, n: int, k: int) -> str:
+        def solve(n, curr, result):
+            if len(curr) == n:
+                result.append("".join(curr))
+                return
+
+            for ch in "abc":
+                if curr and curr[-1] == ch:
+                    continue
+
+                curr.append(ch)
+
+                solve(n, curr, result)
+
+                curr.pop()
+
+        result = []
+        solve(n, [], result)
+
+        return result[k - 1] if k <= len(result) else ""
+
+Approach 2:
+
+class Solution:
+    def solve(self, n, curr, count, k, result):
+        if len(curr) == n:
+            count[0] += 1
+            if count[0] == k:
+                result[0] = "".join(curr)
+            return
+
+        for ch in "abc":
+            if curr and curr[-1] == ch:
+                continue
+
+            curr.append(ch)
+
+            self.solve(n, curr, count, k, result)
+
+            if result[0]:
+                return
+
+            curr.pop()
+
+
+    def getHappyString(self, n: int, k: int) -> str:
+        result = [""]
+        count = [0]
+
+        self.solve(n, [], count, k, result)
+
+        return result[0]
+     

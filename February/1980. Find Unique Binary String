@@ -1,0 +1,52 @@
+******************************************************************************* Python *******************************************************************
+Approach 1:
+
+class Solution:
+    def findDifferentBinaryString(self, nums: List[str]) -> str:
+
+        num_set = set(int(num, 2) for num in nums)
+
+        n = len(nums)
+
+        for number in range(n + 1):
+            if number not in num_set:
+                result = bin(number)[2:]
+                return result.zfill(n)
+
+        return ""
+
+      Approch 2:
+
+class Solution:
+    def findDifferentBinaryString(self, nums: List[str]) -> str:
+
+        result = []
+        n = len(nums)
+
+        for i in range(n):
+            result.append('1' if nums[i][i] == '0' else '0')
+
+        return "".join(result)
+
+Apprach 3:
+
+class Solution:
+    def findDifferentBinaryString(self, nums: List[str]) -> str:
+        n = len(nums)
+
+        num_set = set(nums)
+
+        def backtrack(curr):
+            if len(curr) == n:
+                if curr not in num_set:
+                    return curr
+                return None
+
+            res = backtrack(curr + "0")
+            if res:
+                return res
+
+            res = backtrack(curr + "1")
+            return res
+
+        return backtrack("")

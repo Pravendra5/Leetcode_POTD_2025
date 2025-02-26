@@ -19,3 +19,25 @@ class Solution:
 
 
         return max(maxsum, abs(minsum))
+
+
+Approach 2:
+
+class Solution:
+    def maxAbsoluteSum(self, nums: List[int]) -> int:
+        n = len(nums)
+
+        minprefixsum = 0
+        maxprefixsum = 0
+        prefixsum = 0
+
+        for num in nums:
+            prefixsum += num
+
+
+            minprefixsum = min(minprefixsum, prefixsum)
+            maxprefixsum = max(maxprefixsum, prefixsum)
+
+
+        return maxprefixsum - minprefixsum
+

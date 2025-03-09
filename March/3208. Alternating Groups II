@@ -1,0 +1,47 @@
+**************************************************************************** Python ***********************************************************************8
+
+Approach 1: Brute Force
+
+class Solution:
+    def numberOfAlternatingGroups(self, colors: List[int], k: int) -> int:
+        n = len(colors)
+        result = 0
+
+        extended = colors + colors[:k - 1]
+
+        for i in range(n):
+            is_alternating = True
+            for j in range(i, i + k - 1):
+                if extended[j] == extended[j + 1]:
+                    is_alternating = False
+                    break
+
+            if is_alternating:
+                result += 1
+                
+        return result
+
+Approach 2: Sliding Window
+
+class Solution:
+    def numberOfAlternatingGroups(self, colors: List[int], k: int) -> int:
+        extended = colors + colors[: k - 1]
+
+        result = 0
+        i, j = 0, 1
+
+        while j < len(extended):
+            if extended[j] == extended[j - 1]:
+                i = j
+                j += 1
+                continue
+
+            if j - i + 1 == k:
+                result += 1
+                i += 1
+
+            j += 1
+
+        return result
+
+Approach 3:

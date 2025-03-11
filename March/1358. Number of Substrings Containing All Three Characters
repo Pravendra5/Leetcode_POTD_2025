@@ -1,0 +1,40 @@
+************************************************************************* Python ********************************************************************
+Approach 1: Sliding window
+ 
+class Solution:
+    def numberOfSubstrings(self, s: str) -> int:
+        n = len(s)
+        result = 0
+        mp = [0] * 3
+
+        i = 0
+        for j in range(n):
+            mp[ord(s[j]) - ord('a')] += 1
+
+            while all(mp):
+                result += (n - j)
+                mp[ord(s[i]) - ord('a')] -= 1
+                i += 1
+        
+        return result
+
+Approach 2: Brute Force
+
+class Solution:
+    def numberOfSubstrings(self, s: str) -> int:
+        n = len(s)
+        result = 0
+        
+        for i in range(n):
+            st = set()
+            for j in range(i, n):
+                st.add(s[j])
+
+
+                if len(st) == 3:
+                    result += (n - j)
+                    break
+
+        return result
+
+        
